@@ -1,0 +1,9 @@
+cc_library(
+    name = 'lib-leap',
+    srcs = [
+        'libLeap.dylib',
+    ],
+    visibility = [
+        '//visibility:public',
+    ],
+)

@@ -1,0 +1,6 @@
+# bazel generated
+bazel-*
+
+# misc
+*.swp
+*.swo

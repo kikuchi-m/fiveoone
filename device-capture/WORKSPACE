@@ -1,0 +1,5 @@
+new_local_repository(
+    name = 'leap',
+    path = '/usr/local/lib',
+    build_file = 'external/BUILD.leap',
+)

@@ -3,3 +3,9 @@ new_local_repository(
     path = '/usr/local/lib',
     build_file = 'external/BUILD.leap',
 )
+
+new_local_repository(
+    name = 'boost',
+    path = '/usr/local/Cellar/boost',
+    build_file = 'external/BUILD.boost',
+)

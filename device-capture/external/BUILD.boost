@@ -1,0 +1,28 @@
+cc_library(
+    name = 'lib-boost-system',
+    hdrs = glob([
+        'include/system/*.hpp',
+    ]),
+    srcs = [
+        'lib/libboost_system.dylib',
+    ],
+    visibility = [
+        '//visibility:public',
+    ],
+)
+
+cc_library(
+    name = 'lib-boost-asio',
+    hdrs = [
+        'include/boost/asio.hpp',
+    ] + glob([
+        'include/boost/asio/*.hpp',
+    ]),
+    visibility = [
+        '//visibility:public',
+    ],
+    deps = [
+        ':lib-boost-system',
+    ],
+)
+

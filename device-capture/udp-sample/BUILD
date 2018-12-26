@@ -20,6 +20,17 @@ cc_binary(
     ],
 )
 
+java_binary(
+    name = 'udp_server_java',
+    srcs = glob([
+        'java/src/main/*.java',
+    ]),
+    main_class = 'sample.UdpServer',
+    deps = [
+        'sample_java_proto',
+    ],
+)
+
 proto_library(
     name = 'sample_proto',
     srcs = [
@@ -29,6 +40,13 @@ proto_library(
 
 cc_proto_library(
     name = 'sample_cc_proto',
+    deps = [
+        ':sample_proto',
+    ],
+)
+
+java_proto_library(
+    name = 'sample_java_proto',
     deps = [
         ':sample_proto',
     ],

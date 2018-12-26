@@ -1,12 +1,12 @@
-#ifndef LEAPCAPTURE_UDP_LISTENER_H
-#define LEAPCAPTURE_UDP_LISTENER_H
+#ifndef LEAPCAPTURE_FRAME_SENDER_H
+#define LEAPCAPTURE_FRAME_SENDER_H
 
-// #include "capture/export.h"
+// #include "capture/export.h
 #include "Leap.h"
 
 namespace leapcapture {
 
-class UdpListener : public Leap::Listener {
+class FrameSender : public Leap::Listener {
 public:
   void onInit(const Leap::Controller &) override;
   void onConnect(const Leap::Controller &) override;
@@ -17,4 +17,4 @@ public:
 
 } // namespace leapcapture
 
-#endif // LEAPCAPTURE_UDP_LISTENER_H
+#endif // LEAPCAPTURE_FRAME_SENDER_H

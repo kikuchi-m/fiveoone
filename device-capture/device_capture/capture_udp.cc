@@ -1,9 +1,9 @@
-#include "capture/udp_listener.h"
+#include "capture/frame_sender.h"
 #include "Leap.h"
 #include <iostream>
 
 int main(int argc, char** argv) {
-  leapcapture::UdpListener listener;
+  leapcapture::FrameSender listener;
   Leap::Controller controller;
   controller.addListener(listener);
   controller.setPolicy(Leap::Controller::POLICY_BACKGROUND_FRAMES);

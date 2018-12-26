@@ -3,12 +3,12 @@ package(
 )
 
 cc_library(
-    name = 'leap-capture',
+    name = 'leap_capture',
     srcs = [
-        'udp_listener.cc',
+        'frame_sender.cc',
     ],
     hdrs = [
         'export.h',
-        'udp_listener.h',
+        'frame_sender.h',
     ],
 )

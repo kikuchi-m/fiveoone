@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package jp.co.atware.five_o_one.leap;
+
+message Frame {
+  sfixed64 id = 1;
+  sfixed64 timestamp = 2; // nanosec
+  Hand left_hand = 3;
+  Hand right_hand = 4;
+  repeated SwipeGesture swipe_gestures = 5;
+}
+
+message Hand {
+  sfixed64 id = 1;
+  bool valid = 2;
+  repeated Finger fingers = 3;
+}
+
+message Finger {
+  sfixed64 id = 1;
+  enum Type {
+    THUMB = 0;
+    INDEX = 1;
+    MIDDLE = 2;
+    RING = 3;
+    PINKY = 4;
+  }
+  Type type = 2;
+  float length = 3;
+  float width = 4;
+  repeated Bone bones = 5;
+}
+
+message Bone {
+  enum Type {
+    METACARPAL = 0;
+    PROXIMAL = 1;
+    INTERMEDIATE = 2;
+    DISTAL = 3;
+  }
+  Type type = 1;
+  Vector prev_joint = 2;
+  Vector next_joint = 3;
+}
+
+message SwipeGesture {
+  sfixed64 id = 1;
+  GestureState state = 2;
+  Vector direction = 3;
+  float speed = 4;
+}
+
+enum GestureState {
+  STATE_INVALID = 0;
+  STATE_START = 1;
+  STATE_UPDATE = 2;
+  STATE_STOP = 3;
+}
+
+message Vector {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}

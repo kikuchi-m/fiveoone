@@ -1,5 +1,7 @@
 package jp.co.atware.five_o_one;
 
+import jp.co.atware.five_o_one.leap.Leap;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -11,6 +13,7 @@ public class Application {
         try (DatagramChannel channel = DatagramChannel.open()) {
             channel.socket().bind(new InetSocketAddress("localhost", 22043));
             ByteBuffer buf = ByteBuffer.allocate(4096);
+            Leap.Frame frame;
 
             while (true) {
                 buf.clear();
@@ -18,7 +21,12 @@ public class Application {
                 channel.receive(buf);
                 buf.flip();
 
-                System.out.println("received (" + buf.limit() + ")");
+                frame = Leap.Frame.parseFrom(buf);
+                System.out.println("received (" + buf.limit() + "): "
+                        + frame.getId() + " " + frame.getTimestamp()
+                        // + " L: "
+                        // + frame.getLeftHand() + ", R: " + frame.getRightHand()
+                        );
             }
         } catch (Exception e) {
             System.out.println("ERROR: " + e);

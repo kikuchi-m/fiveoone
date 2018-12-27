@@ -72,6 +72,7 @@ void FrameSender::onFrame(const Leap::Controller &controller) {
 
   fleap::Frame f;
   f.set_id(frame.id());
+  f.set_timestamp(frame.timestamp());
   const Leap::HandList hands = frame.hands();
   for (Leap::HandList::const_iterator it = hands.begin(); it != hands.end();
        ++it) {

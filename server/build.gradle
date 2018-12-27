@@ -19,6 +19,10 @@ repositories {
     jcenter()
 }
 
+sourceSets {
+    main.java.srcDirs += 'src/main/generated'
+}
+
 dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
     compile("org.springframework.boot:spring-boot-devtools")

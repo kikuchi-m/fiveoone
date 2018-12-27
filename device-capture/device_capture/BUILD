@@ -6,5 +6,6 @@ cc_binary(
     deps = [
         '//capture:leap_capture',
         '@leap//:lib-leap',
+        '@boost//:lib-boost-asio',
     ],
 )

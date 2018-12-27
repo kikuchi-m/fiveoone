@@ -83,6 +83,26 @@ void FrameSender::onFrame(const Leap::Controller &controller) {
       f.set_allocated_right_hand(create(hand));
     }
   }
+
+  auto gestures = frame.gestures();
+  for (auto gi = 0; gi < gestures.count(); ++gi) {
+    auto gesture = gestures[gi];
+    switch (gesture.type()) {
+    case Leap::Gesture::TYPE_SWIPE: {
+      Leap::SwipeGesture swipe = gesture;
+      auto g = f.add_swipe_gestures();
+      g->set_id(swipe.id());
+      if (swipe.state() == Leap::Gesture::STATE_INVALID) {
+        g->set_state(fleap::GestureState::STATE_INVALID);
+      } else {
+        g->set_state(static_cast<fleap::GestureState>(swipe.state()));
+      }
+      g->set_allocated_direction(convert(std::move(swipe.direction())));
+      g->set_speed(swipe.speed());
+    }
+    }
+  }
+
   auto serialized = f.SerializeAsString();
 
   std::cout << frame.id()

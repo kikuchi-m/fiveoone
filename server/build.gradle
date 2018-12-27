@@ -23,4 +23,5 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
     compile("org.springframework.boot:spring-boot-devtools")
     compile("org.springframework.boot:spring-boot-starter-websocket")
+    compile("com.google.protobuf:protobuf-java:${protobufVersion}")
 }

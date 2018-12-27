@@ -1,9 +1,9 @@
 java_binary(
-    name = 'five_o_one_server',
+    name = 'fiveoone',
     srcs = glob([
         'src/main/java/**/*.java',
     ]),
-    main_class = 'jp.co.atware.five_o_one.Application',
+    main_class = 'jp.co.atware.fiveoone.Application',
     javacopts = [
         '-Xlint:deprecation',
         '-Xlint:unchecked',

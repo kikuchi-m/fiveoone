@@ -7,7 +7,7 @@
 #include <memory>
 #include <string>
 
-namespace fleap = jp::co::atware::five_o_one::leap;
+namespace fleap = jp::co::atware::fiveoone::leap;
 
 namespace leapcapture {
 

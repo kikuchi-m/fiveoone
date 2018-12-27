@@ -1,6 +1,6 @@
-package jp.co.atware.five_o_one;
+package jp.co.atware.fiveoone;
 
-import jp.co.atware.five_o_one.leap.Leap;
+import jp.co.atware.fiveoone.leap.Leap;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

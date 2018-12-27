@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package jp.co.atware.five_o_one.leap;
+package jp.co.atware.fiveoone.leap;
 
 message Frame {
   sfixed64 id = 1;

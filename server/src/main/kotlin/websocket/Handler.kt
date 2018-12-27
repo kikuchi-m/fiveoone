@@ -1,6 +1,7 @@
 package jp.co.atware.fiveoone.server.controller
 
 
+import jp.co.atware.fiveoone.server.leap.MotionEventProvider
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.socket.CloseStatus
 import org.springframework.web.socket.TextMessage
@@ -12,10 +13,15 @@ import org.springframework.web.socket.handler.TextWebSocketHandler
 
 @Configuration
 @EnableWebSocket
-class WebSocketConfig : WebSocketConfigurer {
+class WebSocketConfig(val provider: MotionEventProvider) : WebSocketConfigurer {
+
+    private val handler = SocketHandler();
+    private val subscriptoinId = provider.subscribe({event ->
+        handler.broadcast()
+    })
 
     override fun registerWebSocketHandlers(registry: WebSocketHandlerRegistry) {
-        registry.addHandler(SocketHandler(), "/ws")
+        registry.addHandler(handler, "/ws")
     }
 }
 
@@ -38,5 +44,8 @@ class SocketHandler : TextWebSocketHandler() {
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
         super.handleTextMessage(session, message)
         println(message);
+    }
+
+    fun broadcast() {
     }
 }

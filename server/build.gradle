@@ -25,7 +25,10 @@ sourceSets {
 
 dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
+    compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:${kotlinxCoroutinesVersion}")
+    compile("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:${kotlinxCoroutinesVersion}")
     compile("org.springframework.boot:spring-boot-devtools")
     compile("org.springframework.boot:spring-boot-starter-websocket")
     compile("com.google.protobuf:protobuf-java:${protobufVersion}")
+
 }

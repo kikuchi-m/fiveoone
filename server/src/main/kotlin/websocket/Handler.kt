@@ -1,6 +1,6 @@
 package jp.co.atware.fiveoone.server.controller
 
-
+import jp.co.atware.fiveoone.server.leap.MotionEvent
 import jp.co.atware.fiveoone.server.leap.MotionEventProvider
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.socket.CloseStatus
@@ -16,9 +16,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler
 class WebSocketConfig(val provider: MotionEventProvider) : WebSocketConfigurer {
 
     private val handler = SocketHandler();
-    private val subscriptoinId = provider.subscribe({event ->
-        handler.broadcast()
-    })
+    private val subscriptoinId = provider.subscribe(handler::broadcast)
 
     override fun registerWebSocketHandlers(registry: WebSocketHandlerRegistry) {
         registry.addHandler(handler, "/ws")
@@ -32,7 +30,6 @@ class SocketHandler : TextWebSocketHandler() {
         super.afterConnectionEstablished(session)
         sessions.add(session)
         println("added (${sessions.size})");
-        session.sendMessage(TextMessage("welcome!"))
     }
 
     override fun afterConnectionClosed(session: WebSocketSession, status: CloseStatus) {
@@ -46,6 +43,9 @@ class SocketHandler : TextWebSocketHandler() {
         println(message);
     }
 
-    fun broadcast() {
+    fun broadcast(event: MotionEvent) {
+        sessions.forEach {
+            it.sendMessage(TextMessage("""{ "gestureState": "${event.gestureState}" }"""))
+        }
     }
 }

@@ -9,9 +9,19 @@ Rectangle {
     WebSocket {
         id: socket
         url: "ws://localhost:8080/ws"
+        property string prevState
 
         onTextMessageReceived: {
             console.log("received text: " + message);
+            const m = JSON.parse(message);
+            if (m.gestureState == "STATE_START") {
+                ta.text += "投げるよー\n"
+            } else if (m.gestureState == "STATE_STOP") {
+                if (prevState == "STATE_UPDATE") {
+                    ta.text += "投げた！\n"
+                }
+            }
+            prevState = m.gestureState;
         }
 
         onBinaryMessageReceived: {
@@ -33,11 +43,31 @@ Rectangle {
         }
     }
 
-    Button {
-        text: "toggle socket"
+    Column {
+        Row {
+            spacing: 48
+            Button {
+                text: "toggle socket"
 
-        onClicked: {
-            socket.active = !socket.active;
+                onClicked: {
+                    socket.active = !socket.active;
+                }
+            }
+
+            Button {
+                text: "clear"
+                onClicked: {
+                    ta.text = "";
+                }
+            }
+        }
+
+        TextArea {
+            id: ta
+            font {
+                bold: true
+                pointSize: 24
+            }
         }
     }
 }

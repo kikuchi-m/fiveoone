@@ -1,12 +1,14 @@
 package jp.co.atware.fiveoone.server.leap
 
+import jp.co.atware.fiveoone.leap.Leap
+
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
 
 import kotlinx.coroutines.*
 
-interface MotionEvent {
-}
+// TODO: update (interim implementation)
+class MotionEvent(val gestureState: Leap.GestureState)
 
 interface MotionEventProvider {
     fun subscribe(action: (MotionEvent) -> Unit): Long
@@ -16,7 +18,7 @@ interface MotionEventProvider {
 class LeapConsumer : MotionEventProvider {
     // TODO: prepare subscription object
     private val currentId = AtomicLong(0)
-    private val map = ConcurrentHashMap<Long, (MotionEvent) -> Unit>()
+    private val handlers = ConcurrentHashMap<Long, (MotionEvent) -> Unit>()
     private var leapListenJob: Job? = null
 
     fun start() {
@@ -26,7 +28,7 @@ class LeapConsumer : MotionEventProvider {
         } else {
             leapListenJob = GlobalScope.launch {
                 try {
-                    Listener().start()
+                    Listener(::onEvent).start()
                 } catch (e: Exception) {
                     println(e)
                 }
@@ -43,10 +45,14 @@ class LeapConsumer : MotionEventProvider {
     override fun subscribe(action: (MotionEvent) -> Unit): Long {
         println("--- registering event handler ---")
         val subscriptionId = currentId.incrementAndGet()
-        map.put(subscriptionId, action)
+        handlers.put(subscriptionId, action)
         return subscriptionId
     }
 
-    override fun unsubscribe(id: Long): Boolean = map.remove(id) != null
+    override fun unsubscribe(id: Long): Boolean = handlers.remove(id) != null
+
+    fun onEvent(event: MotionEvent) {
+        handlers.forEach { _, a -> a(event) }
+    }
 }
 
